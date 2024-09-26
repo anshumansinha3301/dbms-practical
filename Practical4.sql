@@ -1,4 +1,3 @@
--- Step 1: Creating tables with constraints
 CREATE TABLE departments (
     department_id INT PRIMARY KEY,
     department_name VARCHAR(50)
@@ -26,11 +25,10 @@ INSERT INTO departments (department_id, department_name) VALUES
 INSERT INTO employees (employee_id, name, department_id, salary) VALUES
 (1, 'Alice', 1, 50000),
 (2, 'Bob', 2, 45000),
-(3, 'Charlie', 1, 35000), -- Charlie's salary adjusted to avoid CHECK violation
+(3, 'Charlie', 1, 35000),
 (4, 'David', 3, 60000),
 (5, 'Eve', 4, 70000);
 
--- Step 4: Displaying the initial state of the tables
 SELECT * FROM departments;
 SELECT * FROM employees;
 
@@ -64,12 +62,11 @@ UNION
 SELECT name FROM employees
 WHERE department_id IN (SELECT department_id FROM departments WHERE department_name = 'Finance');
 
--- Step 11: Running the INTERSECT-like query using INNER JOIN (since MySQL does not support INTERSECT natively)
+-- Step 11: Running the INTERSECT-like query using INNER JOIN 
 SELECT e.name 
 FROM employees e
 JOIN (SELECT name FROM employees WHERE salary > 50000) emp
 ON e.name = emp.name
 WHERE e.department_id IN (SELECT department_id FROM departments WHERE department_name = 'HR');
 
--- Step 12: Displaying the final state of the tables after all operations
 SELECT * FROM employees;
